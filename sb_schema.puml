@@ -1,0 +1,84 @@
+@startuml
+
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "product" as prd {
+  *id : number <<generated>>
+  --
+  *title : varchar
+  *product_category_id: number <<FK>>
+  *manufacturer_id: number <<FK>>
+  description : text
+}
+
+entity "product_category" as prd_cat {
+  *id : number <<generated>>
+  --
+  *title : varchar
+  description : text
+}
+
+entity "price" as prc {
+  *id : number <<generated>>
+  --
+  *product_id: number <<FK>>
+  *supplier_id: number <<FK>>
+  --
+  *value : number
+}
+
+entity "supplier" as spp {
+  *id : number <<generated>>
+  --
+  *title : varchar
+  description : text
+}
+
+entity "manufacturer" as mnf {
+  *id : number <<generated>>
+  --
+  *title : varchar
+  description : text
+}
+
+entity "customer" as cst {
+  *id : number <<generated>>
+  --
+  *name : varchar
+  *phone: varchar
+  *email: varchar
+}
+
+entity "purchase" as pur {
+  *id : number <<generated>>
+  --
+  *customer_id : number <<FK>>
+  *paid: boolean
+  other_details : text
+}
+
+entity "purchase_item" as pur_itm {
+  *id : number <<generated>>
+  --
+  *purchase_id : number <<FK>>
+  *price_id: number <<FK>>
+}
+
+
+' Zero or One	|o--
+' Exactly One	||--
+' Zero or Many	}o--
+' One or Many	}|--
+prd }o-l-|| prd_cat
+prd }o--|| mnf
+prc }|-l-|| prd
+prc }o--|| spp
+pur }o--|| cst
+pur_itm }|--|| pur
+pur_itm }o--|| prc
+
+@enduml
