@@ -91,6 +91,7 @@ CREATE TABLE shop.price
     id bigserial NOT NULL,
     product_id bigint NOT NULL,
     supplier_id bigint NOT NULL,
+    val decimal NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT product_fk FOREIGN KEY (product_id)
         REFERENCES shop.product (id) MATCH SIMPLE
